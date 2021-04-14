@@ -1,61 +1,95 @@
 let submissions = [
     { name: "Jane" , score: 95, date:"2020-01-24" , passed: true},
     { name: "Joe" , score: 77, date:"2018-05-14" , passed: true },
-    { name: "Jack" , score: 59, date: "2019-07-05" , passed: false},
-    { name: "Jill" , score: 88, date: "2020-04-22", passed: true}
+    { name: "Jack" , score: 95, date: "2019-07-05" , passed: true},
+    { name: "Jill" , score: 97, date: "2020-04-22", passed: true}
     ];
   
 function addSubmission(array, newName, newScore, newDate) {
-array.push ({
-    name: newName,
-    score: newScore,
-    date: newDate,
-    passed: newScore >= 60
-  })    
+  let ifPassed;
+  if (newScore >= 60) {
+    ifPassed = true;
+  } else {
+    ifPassed = false;
+  }
+    array.push ({ name: newName, score: newScore, date: newDate, passed:ifPassed});    
 }
-
 addSubmission(submissions, "Danny", 80, "2021-04-13");
 
-console.log(submissions)
 
 function deleteSubmissionByIndex(array, index) {
   array.splice(index, 1);
 }
-    
-deleteSubmissionByIndex(submissions, 1);
 
-console.log(submissions);
-    
-function deleteSubmissionByName (array, name) {
-  index = array.findIndex(array => array.name === name);
-  array.splice(index, 1);
+deleteSubmissionByIndex(submissions, 0);
+
+function deleteSubmissionByName(array, name){
+  const nameIndex = array.findIndex((submission)=> submission.name === name);
+  array.splice(nameIndex, 1);
 }
-deleteSubmissionByName(submissions, "Joe");
+
+deleteSubmissionByName (submissions, "Jack");
+console.log(submissions);
 
 function editSubmission (array, index, score){
-let index = array.findIndex(array => array.score === score);
-array.splice(index, 1, score)
+  let submission = array[index];
+  submission.score = score;
+  submission.passed = score >= 60? true: false;
 }
 
-function findSubmimssionByName (array,name) {
-  //return find method
-  }
 
-function findLowestScore (array) {
-    //return forEach
-  }
-  
-  function findAverageScore (array) {
-    //for...or loop
-  }
+editSubmission(submissions, 2 , 86);
+console.log(submissions);
 
-  function filterPassing (array){
-    //filter method
-  }
+function findSubmissionByName(array, name) {
+  const foundSubmission = array.find((submission) => submission.name === name); //this gives us back the object it finds not index
+  return foundSubmission;
+}
 
-  function filter90AndAbove (array){
-    //filter method
+console.log(findSubmissionByName(submissions, "Jane"));
+
+const findLowestScore = (array) => {
+  let lowest = array[0];
+  array.forEach(function(submission){
+    if(lowest.score > submission.score) {
+      lowest = submission;
+    }
+  });
+  return lowest;
+}
+
+function findAverageScore(array) {
+    let total = 0;
+    let average;
+    for (let submission of array) {
+      total += submission.score;
+    }
+    average = total / array.length
+    return average;
   }
+  console.log(findAverageScore(submissions));
+
+function filterPassing(array){
+  return array.filter (x => x.passed);
+}
+console.log(filterPassing(submissions));
+
+function filter90AndAbove(array){
+  return array.filter (x => x.score >=90);
+}
+console.log(submissions);
+console.log(filter90AndAbove(submissions));
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 // Find index of an item.
